@@ -1,0 +1,1993 @@
+<!DOCTYPE html>
+<html lang="ur" dir="ltr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>Family Photos &amp; Vault — Google Photos Style Gallery</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Nastaliq+Urdu:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #f8fafd;
+      --surface: #ffffff;
+      --surface-2: #f1f5f9;
+      --primary: #1a73e8;
+      --primary-dark: #1557b0;
+      --primary-light: #e8f0fe;
+      --danger: #d93025;
+      --danger-light: #fce8e6;
+      --success: #188038;
+      --success-light: #e6f4ea;
+      --warning: #f29900;
+      --text: #1f2937;
+      --text-muted: #5f6368;
+      --border: #e0e3eb;
+      --shadow: 0 2px 10px rgba(0,0,0,0.06);
+      --shadow-lg: 0 12px 32px rgba(0,0,0,0.16);
+      --radius: 16px;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    body {
+      font-family: 'Inter', system-ui, -apple-system, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      padding-bottom: 84px;
+    }
+
+    .ur {
+      font-family: 'Noto Nastaliq Urdu', 'Inter', sans-serif;
+      line-height: 1.9;
+    }
+
+    button {
+      font-family: inherit;
+      cursor: pointer;
+      border: none;
+      outline: none;
+      transition: all 0.18s ease;
+    }
+
+    button:active {
+      transform: scale(0.97);
+    }
+
+    input, select, textarea {
+      font-family: inherit;
+      font-size: 15px;
+      border: 1.5px solid var(--border);
+      border-radius: 12px;
+      padding: 12px 14px;
+      width: 100%;
+      background: var(--surface);
+      color: var(--text);
+      transition: border-color 0.2s;
+    }
+
+    input:focus, select:focus {
+      border-color: var(--primary);
+      outline: none;
+    }
+
+    .btn-primary {
+      background: var(--primary);
+      color: #fff;
+      font-weight: 600;
+      padding: 12px 18px;
+      border-radius: 12px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+
+    .btn-primary:hover { background: var(--primary-dark); }
+
+    .btn-secondary {
+      background: var(--primary-light);
+      color: var(--primary);
+      font-weight: 600;
+      padding: 10px 16px;
+      border-radius: 12px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+    }
+
+    .btn-ghost {
+      background: var(--surface-2);
+      color: var(--text);
+      font-weight: 500;
+      padding: 10px 14px;
+      border-radius: 12px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+    }
+
+    .btn-danger {
+      background: var(--danger);
+      color: #fff;
+      font-weight: 600;
+      padding: 10px 16px;
+      border-radius: 12px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+    }
+
+    .hidden { display: none !important; }
+
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 40;
+      background: rgba(255, 255, 255, 0.94);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      padding: 10px 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-weight: 700;
+      font-size: 18px;
+      color: var(--text);
+      white-space: nowrap;
+    }
+
+    .brand-icon {
+      width: 36px;
+      height: 36px;
+      border-radius: 10px;
+      background: conic-gradient(from 45deg, #ea4335 0deg 90deg, #fbbc05 90deg 180deg, #34a853 0deg 270deg, #4285f4 270deg 360deg);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      font-size: 18px;
+      box-shadow: 0 2px 6px rgba(66,133,244,0.3);
+    }
+
+    .search-wrap {
+      flex: 1;
+      max-width: 440px;
+      position: relative;
+    }
+
+    .search-wrap input {
+      background: var(--surface-2);
+      border: 1px solid transparent;
+      border-radius: 999px;
+      padding: 9px 16px 9px 38px;
+      font-size: 14px;
+    }
+
+    .search-wrap input:focus {
+      background: #fff;
+      border-color: var(--primary);
+    }
+
+    .search-icon {
+      position: absolute;
+      left: 13px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--text-muted);
+      font-size: 15px;
+      pointer-events: none;
+    }
+
+    .top-actions {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .announcement-bar {
+      background: linear-gradient(90deg, #1a73e8, #4285f4);
+      color: #fff;
+      padding: 8px 16px;
+      font-size: 13px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      text-align: center;
+    }
+
+    .auth-container {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      background: radial-gradient(circle at top right, #e8f0fe, #f8fafd 55%);
+    }
+
+    .auth-card {
+      background: #fff;
+      width: 100%;
+      max-width: 430px;
+      border-radius: 24px;
+      padding: 28px 24px;
+      box-shadow: var(--shadow-lg);
+      border: 1px solid var(--border);
+    }
+
+    .auth-tabs {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      background: var(--surface-2);
+      padding: 4px;
+      border-radius: 14px;
+      margin: 18px 0;
+    }
+
+    .auth-tab {
+      padding: 10px;
+      border-radius: 11px;
+      font-weight: 600;
+      font-size: 14px;
+      background: transparent;
+      color: var(--text-muted);
+    }
+
+    .auth-tab.active {
+      background: #fff;
+      color: var(--primary);
+      box-shadow: 0 2px 6px rgba(0,0,0,0.06);
+    }
+
+    .form-group {
+      margin-bottom: 14px;
+    }
+
+    .form-group label {
+      display: block;
+      font-size: 13px;
+      font-weight: 600;
+      margin-bottom: 6px;
+      color: var(--text);
+    }
+
+    .container {
+      max-width: 1160px;
+      margin: 0 auto;
+      padding: 16px;
+    }
+
+    .action-strip {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 18px;
+    }
+
+    .chips {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      overflow-x: auto;
+      padding-bottom: 2px;
+    }
+
+    .chip {
+      padding: 8px 14px;
+      border-radius: 999px;
+      font-size: 13px;
+      font-weight: 600;
+      background: #fff;
+      border: 1px solid var(--border);
+      color: var(--text-muted);
+      white-space: nowrap;
+    }
+
+    .chip.active {
+      background: var(--primary-light);
+      color: var(--primary);
+      border-color: var(--primary);
+    }
+
+    .memories-row {
+      display: flex;
+      gap: 12px;
+      overflow-x: auto;
+      padding-bottom: 10px;
+      margin-bottom: 18px;
+    }
+
+    .memory-card {
+      min-width: 130px;
+      height: 175px;
+      border-radius: 18px;
+      overflow: hidden;
+      position: relative;
+      flex-shrink: 0;
+      box-shadow: var(--shadow);
+      cursor: pointer;
+    }
+
+    .memory-card img, .memory-card video {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .memory-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(0,0,0,0.75), transparent 55%);
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding: 10px;
+      color: #fff;
+    }
+
+    .memory-overlay span {
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    .media-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(168px, 1fr));
+      gap: 12px;
+    }
+
+    @media (min-width: 640px) {
+      .media-grid {
+        grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
+        gap: 16px;
+      }
+    }
+
+    .media-card {
+      background: #fff;
+      border-radius: 16px;
+      overflow: hidden;
+      border: 1px solid var(--border);
+      box-shadow: var(--shadow);
+      position: relative;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .media-thumb {
+      position: relative;
+      width: 100%;
+      aspect-ratio: 1 / 1;
+      background: #111827;
+      overflow: hidden;
+      cursor: pointer;
+    }
+
+    .media-thumb img, .media-thumb video {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.25s ease;
+    }
+
+    .media-card:hover .media-thumb img {
+      transform: scale(1.03);
+    }
+
+    .video-badge {
+      position: absolute;
+      top: 8px;
+      left: 8px;
+      background: rgba(0,0,0,0.72);
+      color: #fff;
+      font-size: 11px;
+      font-weight: 700;
+      padding: 4px 8px;
+      border-radius: 999px;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .fav-badge {
+      position: absolute;
+      top: 8px;
+      right: 8px;
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.9);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 14px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+    }
+
+    .card-footer {
+      padding: 9px 10px;
+      display: flex;
+      flex-direction: column;
+      gap: 7px;
+      background: #fff;
+    }
+
+    .card-meta {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 6px;
+    }
+
+    .card-title {
+      font-size: 13px;
+      font-weight: 600;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .card-date {
+      font-size: 11px;
+      color: var(--text-muted);
+      white-space: nowrap;
+    }
+
+    .hide-btn-1tap {
+      width: 100%;
+      background: #1e293b;
+      color: #fff;
+      font-size: 12px;
+      font-weight: 600;
+      padding: 7px 10px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 5px;
+    }
+
+    .hide-btn-1tap:hover {
+      background: #0f172a;
+    }
+
+    .vault-card-actions {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 6px;
+    }
+
+    .vault-btn-save {
+      background: var(--success-light);
+      color: var(--success);
+      font-size: 11.5px;
+      font-weight: 700;
+      padding: 7px 6px;
+      border-radius: 9px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 4px;
+    }
+
+    .vault-btn-unlock {
+      background: var(--primary-light);
+      color: var(--primary);
+      font-size: 11.5px;
+      font-weight: 700;
+      padding: 7px 6px;
+      border-radius: 9px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 4px;
+    }
+
+    .bottom-nav {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      z-index: 45;
+      background: #fff;
+      border-top: 1px solid var(--border);
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      padding: 6px 4px 10px;
+      box-shadow: 0 -2px 12px rgba(0,0,0,0.05);
+    }
+
+    .nav-item {
+      background: transparent;
+      color: var(--text-muted);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 3px;
+      font-size: 11px;
+      font-weight: 600;
+      padding: 4px 2px;
+      border-radius: 12px;
+    }
+
+    .nav-item .nav-icon {
+      font-size: 19px;
+      padding: 4px 14px;
+      border-radius: 999px;
+      transition: background 0.2s;
+    }
+
+    .nav-item.active {
+      color: var(--primary);
+    }
+
+    .nav-item.active .nav-icon {
+      background: var(--primary-light);
+    }
+
+    .vault-gate {
+      max-width: 380px;
+      margin: 20px auto;
+      background: #fff;
+      border-radius: 24px;
+      padding: 26px 22px;
+      text-align: center;
+      box-shadow: var(--shadow-lg);
+      border: 1px solid var(--border);
+    }
+
+    .pin-dots {
+      display: flex;
+      justify-content: center;
+      gap: 14px;
+      margin: 18px 0;
+    }
+
+    .pin-dot {
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      border: 2px solid var(--primary);
+      background: transparent;
+      transition: all 0.15s;
+    }
+
+    .pin-dot.filled {
+      background: var(--primary);
+      transform: scale(1.12);
+    }
+
+    .keypad {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+      max-width: 270px;
+      margin: 0 auto 14px;
+    }
+
+    .key-btn {
+      height: 56px;
+      border-radius: 16px;
+      background: var(--surface-2);
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--text);
+    }
+
+    .key-btn:hover {
+      background: var(--primary-light);
+      color: var(--primary);
+    }
+
+    .modal-backdrop {
+      position: fixed;
+      inset: 0;
+      z-index: 60;
+      background: rgba(15, 23, 42, 0.82);
+      backdrop-filter: blur(6px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 16px;
+    }
+
+    .modal-box {
+      background: #fff;
+      width: 100%;
+      max-width: 560px;
+      border-radius: 22px;
+      overflow: hidden;
+      box-shadow: var(--shadow-lg);
+      max-height: 92vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .modal-header {
+      padding: 14px 18px;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-weight: 700;
+    }
+
+    .modal-body {
+      padding: 18px;
+      overflow-y: auto;
+    }
+
+    .viewer-stage {
+      background: #000;
+      border-radius: 14px;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      max-height: 55vh;
+      margin-bottom: 14px;
+    }
+
+    .viewer-stage img, .viewer-stage video {
+      max-width: 100%;
+      max-height: 55vh;
+      object-fit: contain;
+    }
+
+    .toast {
+      position: fixed;
+      bottom: 84px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 80;
+      background: #1e293b;
+      color: #fff;
+      padding: 12px 18px;
+      border-radius: 14px;
+      box-shadow: var(--shadow-lg);
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      font-size: 13.5px;
+      font-weight: 500;
+      min-width: 280px;
+      max-width: 92vw;
+      justify-content: space-between;
+    }
+
+    .toast-undo {
+      background: #38bdf8;
+      color: #0f172a;
+      font-weight: 700;
+      padding: 6px 12px;
+      border-radius: 8px;
+      font-size: 12.5px;
+      white-space: nowrap;
+    }
+
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10px;
+      margin-bottom: 16px;
+    }
+
+    @media (min-width: 600px) {
+      .stats-grid {
+        grid-template-columns: repeat(4, 1fr);
+      }
+    }
+
+    .stat-box {
+      background: var(--surface-2);
+      padding: 14px;
+      border-radius: 14px;
+      text-align: center;
+    }
+
+    .stat-num {
+      font-size: 22px;
+      font-weight: 800;
+      color: var(--primary);
+    }
+
+    .stat-label {
+      font-size: 12px;
+      color: var(--text-muted);
+      margin-top: 2px;
+    }
+
+    .user-row-card {
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 12px;
+      margin-bottom: 10px;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      background: #fff;
+    }
+
+    .badge {
+      padding: 3px 9px;
+      border-radius: 999px;
+      font-size: 11px;
+      font-weight: 700;
+    }
+
+    .badge-active { background: var(--success-light); color: var(--success); }
+    .badge-blocked { background: var(--danger-light); color: var(--danger); }
+
+    .empty-state {
+      text-align: center;
+      padding: 46px 20px;
+      background: #fff;
+      border-radius: 20px;
+      border: 1px dashed var(--border);
+      color: var(--text-muted);
+    }
+
+    .empty-state .big-icon {
+      font-size: 44px;
+      margin-bottom: 10px;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- AUTH SCREEN -->
+  <div id="authScreen" class="auth-container">
+    <div class="auth-card">
+      <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:10px;">
+        <div class="brand">
+          <div class="brand-icon">🖼️</div>
+          <div>
+            <div>Family Photos</div>
+            <div style="font-size:11px; color:var(--text-muted); font-weight:500;">Safe Gallery &amp; Media Vault</div>
+          </div>
+        </div>
+        <button class="btn-ghost" style="font-size:12px; padding:7px 11px;" onclick="openAdminModal()">🛡️ Admin</button>
+      </div>
+
+      <p class="ur" style="font-size:14px; color:var(--text-muted); text-align:right; margin-bottom:6px;">
+        اپنے نام، واٹس ایپ نمبر اور پاس ورڈ کے ساتھ لاگ ان کریں اور اپنی فیملی تصاویر و ویڈیوز محفوظ رکھیں۔
+      </p>
+
+      <div class="auth-tabs">
+        <button id="tabLoginBtn" class="auth-tab active" onclick="switchAuthTab('login')">لاگ ان (Login)</button>
+        <button id="tabRegisterBtn" class="auth-tab" onclick="switchAuthTab('register')">نیا اکاؤنٹ (Register)</button>
+      </div>
+
+      <!-- LOGIN FORM -->
+      <form id="loginForm" onsubmit="handleLogin(event)">
+        <div class="form-group">
+          <label>نام یا واٹس ایپ نمبر (Name or WhatsApp Number)</label>
+          <input type="text" id="loginIdentifier" placeholder="مثال: Ali Raza یا 03001234567" required />
+        </div>
+        <div class="form-group">
+          <label>پاس ورڈ (Password)</label>
+          <input type="password" id="loginPassword" placeholder="اپنا پاس ورڈ لکھیں" required />
+        </div>
+        <button type="submit" class="btn-primary" style="width:100%; margin-top:4px;">🔓 لاگ ان کریں (Login)</button>
+        <button type="button" class="btn-secondary" style="width:100%; margin-top:10px;" onclick="demoLogin()">⚡ 1-Click ڈیمو لاگ ان (Instant Demo)</button>
+      </form>
+
+      <!-- REGISTER FORM -->
+      <form id="registerForm" class="hidden" onsubmit="handleRegister(event)">
+        <div class="form-group">
+          <label>پورا نام (Full Name)</label>
+          <input type="text" id="regName" placeholder="اپنا پورا نام لکھیں" required />
+        </div>
+        <div class="form-group">
+          <label>واٹس ایپ نمبر (WhatsApp Number)</label>
+          <input type="tel" id="regWhatsapp" placeholder="+92 300 1234567" required />
+        </div>
+        <div class="form-group">
+          <label>پاس ورڈ بنائیں (Create Password)</label>
+          <input type="password" id="regPassword" placeholder="کم از کم 4 ہندسے یا حروف" required minlength="4" />
+        </div>
+        <button type="submit" class="btn-primary" style="width:100%; margin-top:4px;">✅ اکاؤنٹ بنائیں اور لاگ ان کریں</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- MAIN APP SCREEN -->
+  <div id="appScreen" class="hidden">
+    <div id="announcementBar" class="announcement-bar hidden">
+      <span>📢</span>
+      <span id="announcementText"></span>
+    </div>
+
+    <header class="topbar">
+      <div class="brand">
+        <div class="brand-icon">🖼️</div>
+        <span class="hide-mobile">Family Photos</span>
+      </div>
+
+      <div class="search-wrap">
+        <span class="search-icon">🔍</span>
+        <input type="text" id="searchInput" placeholder="تصاویر، ویڈیوز یا البم تلاش کریں..." oninput="renderCurrentView()" />
+      </div>
+
+      <div class="top-actions">
+        <button class="btn-ghost" style="padding:8px 11px; font-size:12px;" onclick="openAdminModal()">🛡️ Admin</button>
+        <button class="btn-ghost" style="padding:8px 11px; font-size:12px; color:var(--danger);" onclick="logoutUser()">خروج</button>
+      </div>
+    </header>
+
+    <main class="container">
+      <div class="action-strip">
+        <div>
+          <div style="font-size:16px; font-weight:700;" id="welcomeUserTitle">خوش آمدید!</div>
+          <div style="font-size:12px; color:var(--text-muted);" id="welcomeUserSub">WhatsApp: —</div>
+        </div>
+
+        <div style="display:flex; gap:8px; flex-wrap:wrap;">
+          <label class="btn-primary" style="cursor:pointer;">
+            <span>+ اپ لوڈ تصویر / ویڈیو</span>
+            <input type="file" id="mainMediaInput" accept="image/*,video/*" multiple class="hidden" onchange="handleMediaUpload(event, false)" />
+          </label>
+        </div>
+      </div>
+
+      <!-- VIEW: PHOTOS & VIDEOS GALLERY -->
+      <section id="viewGallery">
+        <div class="chips" style="margin-bottom:14px;">
+          <button class="chip active" id="filterAll" onclick="setMediaFilter('all')">سب (All)</button>
+          <button class="chip" id="filterPhoto" onclick="setMediaFilter('image')">🖼️ تصاویر (Photos)</button>
+          <button class="chip" id="filterVideo" onclick="setMediaFilter('video')">🎬 ویڈیوز (Videos)</button>
+        </div>
+
+        <div id="memoriesSection">
+          <div style="font-size:13px; font-weight:700; color:var(--text-muted); margin-bottom:8px;">✨ فیملی یادیں (Recent Memories)</div>
+          <div id="memoriesRow" class="memories-row"></div>
+        </div>
+
+        <div id="galleryGrid" class="media-grid"></div>
+      </section>
+
+      <!-- VIEW: ALBUMS -->
+      <section id="viewAlbums" class="hidden">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:14px;">
+          <h3 style="font-size:17px;">📁 فیملی البمز (Albums)</h3>
+          <button class="btn-secondary" onclick="createNewAlbum()">+ نیا البم بنائیں</button>
+        </div>
+        <div id="albumsList" class="media-grid"></div>
+      </section>
+
+      <!-- VIEW: FAVORITES -->
+      <section id="viewFavorites" class="hidden">
+        <h3 style="font-size:17px; margin-bottom:14px;">❤️ پسندیدہ تصاویر و ویڈیوز (Favorites)</h3>
+        <div id="favoritesGrid" class="media-grid"></div>
+      </section>
+
+      <!-- VIEW: LOCKED FOLDER (VAULT) -->
+      <section id="viewVault" class="hidden">
+        <div id="vaultGate" class="vault-gate">
+          <div style="font-size:40px; margin-bottom:6px;">🔐</div>
+          <h3 id="vaultGateTitle" style="font-size:18px; margin-bottom:4px;">لاکڈ فولڈر (Locked Folder)</h3>
+          <p id="vaultGateDesc" style="font-size:13px; color:var(--text-muted);">اپنی خفیہ تصاویر اور ویڈیوز دیکھنے کے لیے 4 ہندسوں کا PIN درج کریں</p>
+
+          <div class="pin-dots" id="pinDots">
+            <div class="pin-dot"></div>
+            <div class="pin-dot"></div>
+            <div class="pin-dot"></div>
+            <div class="pin-dot"></div>
+          </div>
+
+          <div id="pinErrorMsg" style="color:var(--danger); font-size:12.5px; font-weight:600; min-height:18px; margin-bottom:8px;"></div>
+
+          <div class="keypad">
+            <button class="key-btn" onclick="pressPinDigit('1')">1</button>
+            <button class="key-btn" onclick="pressPinDigit('2')">2</button>
+            <button class="key-btn" onclick="pressPinDigit('3')">3</button>
+            <button class="key-btn" onclick="pressPinDigit('4')">4</button>
+            <button class="key-btn" onclick="pressPinDigit('5')">5</button>
+            <button class="key-btn" onclick="pressPinDigit('6')">6</button>
+            <button class="key-btn" onclick="pressPinDigit('7')">7</button>
+            <button class="key-btn" onclick="pressPinDigit('8')">8</button>
+            <button class="key-btn" onclick="pressPinDigit('9')">9</button>
+            <button class="key-btn" style="font-size:13px;" onclick="clearPinInput()">صاف</button>
+            <button class="key-btn" onclick="pressPinDigit('0')">0</button>
+            <button class="key-btn" onclick="backspacePin()">⌫</button>
+          </div>
+
+          <button id="quickSetPinBtn" class="btn-secondary hidden" style="width:100%; margin-bottom:8px;" onclick="quickSetDefaultPin()">
+            ⚡ 1-Click آسان PIN سیٹ کریں (1234)
+          </button>
+
+          <button id="forgotPinBtn" class="btn-ghost" style="width:100%; font-size:12.5px;" onclick="resetVaultPin()">
+            🔑 PIN بھول گئے؟ نیا PIN سیٹ کریں
+          </button>
+        </div>
+
+        <div id="vaultUnlockedArea" class="hidden">
+          <div style="background:#1e293b; color:#fff; padding:16px; border-radius:18px; margin-bottom:14px; display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between; gap:10px;">
+            <div>
+              <div style="font-size:16px; font-weight:700;">🔒 پرائیویٹ لاکڈ فولڈر (Unlocked)</div>
+              <div style="font-size:12px; color:#cbd5e1;">یہاں محفوظ تصاویر اور ویڈیوز مین گیلری میں نظر نہیں آتیں</div>
+            </div>
+            <div style="display:flex; gap:8px; flex-wrap:wrap;">
+              <label class="btn-primary" style="background:#38bdf8; color:#0f172a; cursor:pointer; font-size:13px;">
+                <span>+ براہِ راست ویڈیو / تصویر یہاں محفوظ کریں</span>
+                <input type="file" accept="image/*,video/*" multiple class="hidden" onchange="handleMediaUpload(event, true)" />
+              </label>
+              <button class="btn-ghost" style="background:rgba(255,255,255,0.14); color:#fff; font-size:12.5px;" onclick="lockVaultNow()">🔒 فولڈر لاک کریں</button>
+            </div>
+          </div>
+
+          <div class="chips" style="margin-bottom:14px;">
+            <button class="chip active" id="vaultFilterAll" onclick="setVaultFilter('all')">سب (All)</button>
+            <button class="chip" id="vaultFilterVideo" onclick="setVaultFilter('video')">🎬 لاکڈ ویڈیوز (Locked Videos)</button>
+            <button class="chip" id="vaultFilterPhoto" onclick="setVaultFilter('image')">🖼️ لاکڈ تصاویر (Locked Photos)</button>
+          </div>
+
+          <div id="vaultGrid" class="media-grid"></div>
+        </div>
+      </section>
+
+      <!-- VIEW: TRASH -->
+      <section id="viewTrash" class="hidden">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:14px;">
+          <h3 style="font-size:17px;">🗑️ ٹریش (Deleted Items)</h3>
+          <button class="btn-danger" style="font-size:12.5px;" onclick="emptyTrash()">ٹریش خالی کریں</button>
+        </div>
+        <div id="trashGrid" class="media-grid"></div>
+      </section>
+    </main>
+
+    <!-- Bottom Navigation -->
+    <nav class="bottom-nav">
+      <button class="nav-item active" id="navGallery" onclick="switchNav('gallery')">
+        <span class="nav-icon">🖼️</span>
+        <span>گیلری</span>
+      </button>
+      <button class="nav-item" id="navAlbums" onclick="switchNav('albums')">
+        <span class="nav-icon">📁</span>
+        <span>البمز</span>
+      </button>
+      <button class="nav-item" id="navFavorites" onclick="switchNav('favorites')">
+        <span class="nav-icon">❤️</span>
+        <span>پسندیدہ</span>
+      </button>
+      <button class="nav-item" id="navVault" onclick="switchNav('vault')">
+        <span class="nav-icon">🔒</span>
+        <span>لاکڈ فولڈر</span>
+      </button>
+      <button class="nav-item" id="navTrash" onclick="switchNav('trash')">
+        <span class="nav-icon">🗑️</span>
+        <span>ٹریش</span>
+      </button>
+    </nav>
+  </div>
+
+  <!-- MEDIA VIEWER & EDITOR MODAL -->
+  <div id="viewerModal" class="modal-backdrop hidden" onclick="closeViewerOnBackdrop(event)">
+    <div class="modal-box">
+      <div class="modal-header">
+        <span id="viewerTitle" style="white-space:nowrap; overflow:hidden; text-overflow:ellipsis; max-width:75%;">Media Preview</span>
+        <button class="btn-ghost" style="padding:6px 10px;" onclick="closeViewer()">✕</button>
+      </div>
+      <div class="modal-body">
+        <div class="viewer-stage" id="viewerStage"></div>
+
+        <div id="photoEditTools" class="hidden" style="display:flex; gap:8px; flex-wrap:wrap; margin-bottom:12px;">
+          <button class="btn-ghost" style="font-size:12px;" onclick="applyViewerFilter('none')">اصل (Original)</button>
+          <button class="btn-ghost" style="font-size:12px;" onclick="applyViewerFilter('brightness(1.18) contrast(1.08)')">✨ روشن (Bright)</button>
+          <button class="btn-ghost" style="font-size:12px;" onclick="applyViewerFilter('sepia(0.35) saturate(1.3)')">🌅 وارم (Warm)</button>
+          <button class="btn-ghost" style="font-size:12px;" onclick="applyViewerFilter('grayscale(1)')">🖤 بلیک اینڈ وائٹ</button>
+          <button class="btn-ghost" style="font-size:12px;" onclick="rotateViewerImage()">🔄 گھمائیں (Rotate)</button>
+        </div>
+
+        <div style="display:grid; grid-template-columns:repeat(2, 1fr); gap:8px;">
+          <button id="viewerFavBtn" class="btn-ghost" onclick="toggleViewerFavorite()">❤️ پسندیدہ</button>
+          <button id="viewerLockBtn" class="btn-secondary" onclick="toggleViewerLock()">🔒 چھپائیں / ان لاک</button>
+          <button class="btn-ghost" onclick="downloadViewerMedia()">⬇️ فون میں محفوظ کریں</button>
+          <button id="viewerDeleteBtn" class="btn-danger" onclick="deleteViewerMedia()">🗑️ حذف کریں</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ADMIN PANEL MODAL -->
+  <div id="adminModal" class="modal-backdrop hidden" onclick="if(event.target===this) closeAdminModal()">
+    <div class="modal-box" style="max-width:680px;">
+      <div class="modal-header">
+        <span>🛡️ ویب سائٹ ایڈمن پینل (Admin Panel)</span>
+        <button class="btn-ghost" style="padding:6px 10px;" onclick="closeAdminModal()">✕</button>
+      </div>
+      <div class="modal-body">
+        <div id="adminLoginBox">
+          <p style="font-size:13px; color:var(--text-muted); margin-bottom:12px;">
+            ایڈمن پینل کھولنے کے لیے ایڈمن ID اور پاس ورڈ درج کریں۔ (Default: <b>admin</b> / <b>1234</b>)
+          </p>
+          <div class="form-group">
+            <label>Admin ID</label>
+            <input type="text" id="adminIdInput" value="admin" />
+          </div>
+          <div class="form-group">
+            <label>Admin Password</label>
+            <input type="password" id="adminPassInput" placeholder="1234" />
+          </div>
+          <button class="btn-primary" style="width:100%;" onclick="verifyAdminLogin()">🔓 ایڈمن پینل کھولیں</button>
+        </div>
+
+        <div id="adminDashboard" class="hidden">
+          <div class="stats-grid">
+            <div class="stat-box">
+              <div class="stat-num" id="statUsers">0</div>
+              <div class="stat-label">کل صارفین (Users)</div>
+            </div>
+            <div class="stat-box">
+              <div class="stat-num" id="statPhotos">0</div>
+              <div class="stat-label">کل تصاویر (Photos)</div>
+            </div>
+            <div class="stat-box">
+              <div class="stat-num" id="statVideos">0</div>
+              <div class="stat-label">کل ویڈیوز (Videos)</div>
+            </div>
+            <div class="stat-box">
+              <div class="stat-num" id="statLocked">0</div>
+              <div class="stat-label">لاکڈ میڈیا (Locked)</div>
+            </div>
+          </div>
+
+          <div style="background:var(--surface-2); padding:14px; border-radius:14px; margin-bottom:16px;">
+            <label style="font-size:13px; font-weight:700; display:block; margin-bottom:6px;">📢 لائیو اعلان بینر (Website Announcement)</label>
+            <div style="display:flex; gap:8px;">
+              <input type="text" id="adminAnnouncementInput" placeholder="تمام صارفین کے لیے پیغام لکھیں..." />
+              <button class="btn-primary" onclick="saveAnnouncement()">محفوظ کریں</button>
+            </div>
+          </div>
+
+          <h4 style="font-size:14.5px; margin-bottom:10px;">👥 رجسٹرڈ صارفین اور واٹس ایپ ریکارڈ (Users List)</h4>
+          <div id="adminUsersList"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TOAST NOTIFICATION -->
+  <div id="toastBox" class="toast hidden">
+    <span id="toastMessage"></span>
+    <button id="toastUndoBtn" class="toast-undo hidden" onclick="triggerUndo()">واپس لائیں (Undo)</button>
+  </div>
+
+  <script>
+    const STORAGE_KEYS = {
+      USERS: 'fp_users_v3',
+      CURRENT_USER: 'fp_current_user_v3',
+      ALBUMS: 'fp_albums_v3',
+      ANNOUNCEMENT: 'fp_announcement_v3',
+      ADMIN_PASS: 'fp_admin_pass_v3'
+    };
+
+    const DB_NAME = 'FamilyPhotosVaultDB';
+    const STORE_NAME = 'mediaItems';
+    let db = null;
+
+    function initDB() {
+      return new Promise((resolve, reject) => {
+        const req = indexedDB.open(DB_NAME, 1);
+        req.onupgradeneeded = (e) => {
+          const database = e.target.result;
+          if (!database.objectStoreNames.contains(STORE_NAME)) {
+            database.createObjectStore(STORE_NAME, { keyPath: 'id' });
+          }
+        };
+        req.onsuccess = (e) => {
+          db = e.target.result;
+          resolve(db);
+        };
+        req.onerror = (e) => reject(e);
+      });
+    }
+
+    function dbGetAllMedia() {
+      return new Promise((resolve) => {
+        if (!db) return resolve([]);
+        const tx = db.transaction(STORE_NAME, 'readonly');
+        const store = tx.objectStore(STORE_NAME);
+        const req = store.getAll();
+        req.onsuccess = () => resolve(req.result || []);
+        req.onerror = () => resolve([]);
+      });
+    }
+
+    function dbPutMedia(item) {
+      return new Promise((resolve) => {
+        const tx = db.transaction(STORE_NAME, 'readwrite');
+        tx.objectStore(STORE_NAME).put(item);
+        tx.oncomplete = () => resolve(true);
+      });
+    }
+
+    function dbDeleteMedia(id) {
+      return new Promise((resolve) => {
+        const tx = db.transaction(STORE_NAME, 'readwrite');
+        tx.objectStore(STORE_NAME).delete(id);
+        tx.oncomplete = () => resolve(true);
+      });
+    }
+
+    let currentUser = null;
+    let allMedia = [];
+    let currentNav = 'gallery';
+    let mediaFilter = 'all';
+    let vaultFilter = 'all';
+    let isVaultUnlocked = false;
+    let enteredPin = '';
+    let activeViewerItem = null;
+    let viewerRotation = 0;
+    let undoCallback = null;
+    let toastTimer = null;
+
+    function createSamplePhoto(title, bg1, bg2, emoji) {
+      const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="600" height="600" viewBox="0 0 600 600">
+        <defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="${bg1}"/><stop offset="100%" stop-color="${bg2}"/></linearGradient></defs>
+        <rect width="600" height="600" fill="url(#g)"/>
+        <text x="50%" y="46%" font-size="110" text-anchor="middle" dominant-baseline="middle">${emoji}</text>
+        <text x="50%" y="65%" font-size="28" font-family="sans-serif" font-weight="bold" fill="#ffffff" text-anchor="middle">${title}</text>
+      </svg>`;
+      return 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(svg);
+    }
+
+    function getUsers() {
+      return JSON.parse(localStorage.getItem(STORAGE_KEYS.USERS) || '[]');
+    }
+
+    function saveUsers(users) {
+      localStorage.setItem(STORAGE_KEYS.USERS, JSON.stringify(users));
+    }
+
+    async function seedDemoDataIfNeeded(userId) {
+      const existing = allMedia.filter(m => m.userId === userId);
+      if (existing.length > 0) return;
+
+      const samples = [
+        {
+          id: 'sample_' + Date.now() + '_1',
+          userId,
+          title: 'Family Dinner Memory',
+          type: 'image',
+          dataUrl: createSamplePhoto('Family Dinner', '#1a73e8', '#34a853', '👨‍👩‍👧‍👦'),
+          date: 'Today',
+          favorite: true,
+          locked: false,
+          trashed: false,
+          album: 'Family Gathering'
+        },
+        {
+          id: 'sample_' + Date.now() + '_2',
+          userId,
+          title: 'Eid Celebration',
+          type: 'image',
+          dataUrl: createSamplePhoto('Eid Mubarak', '#f29900', '#ea4335', '🌙'),
+          date: 'Yesterday',
+          favorite: false,
+          locked: false,
+          trashed: false,
+          album: 'Celebrations'
+        },
+        {
+          id: 'sample_' + Date.now() + '_3',
+          userId,
+          title: 'Kids Park Trip',
+          type: 'image',
+          dataUrl: createSamplePhoto('Park Picnic', '#0d9488', '#2563eb', '🌳'),
+          date: '10 Nov 2026',
+          favorite: true,
+          locked: false,
+          trashed: false,
+          album: 'Family Gathering'
+        }
+      ];
+
+      for (const s of samples) {
+        await dbPutMedia(s);
+      }
+      allMedia = await dbGetAllMedia();
+    }
+
+    function switchAuthTab(tab) {
+      const isLogin = tab === 'login';
+      document.getElementById('tabLoginBtn').classList.toggle('active', isLogin);
+      document.getElementById('tabRegisterBtn').classList.toggle('active', !isLogin);
+      document.getElementById('loginForm').classList.toggle('hidden', !isLogin);
+      document.getElementById('registerForm').classList.toggle('hidden', isLogin);
+    }
+
+    async function handleRegister(e) {
+      e.preventDefault();
+      const name = document.getElementById('regName').value.trim();
+      const whatsapp = document.getElementById('regWhatsapp').value.trim();
+      const password = document.getElementById('regPassword').value.trim();
+
+      if (!name || !whatsapp || !password) return;
+
+      const users = getUsers();
+      const exists = users.some(u => u.whatsapp === whatsapp || u.name.toLowerCase() === name.toLowerCase());
+      if (exists) {
+        showToast('یہ نام یا واٹس ایپ نمبر پہلے سے رجسٹرڈ ہے، براہِ کرم لاگ ان کریں۔');
+        switchAuthTab('login');
+        return;
+      }
+
+      const newUser = {
+        id: 'user_' + Date.now(),
+        name,
+        whatsapp,
+        password,
+        vaultPin: null,
+        blocked: false,
+        createdAt: new Date().toLocaleDateString()
+      };
+
+      users.push(newUser);
+      saveUsers(users);
+      await startUserSession(newUser);
+      showToast('اکاؤنٹ کامیابی سے بن گیا! خوش آمدید ' + name);
+    }
+
+    async function handleLogin(e) {
+      e.preventDefault();
+      const identifier = document.getElementById('loginIdentifier').value.trim().toLowerCase();
+      const password = document.getElementById('loginPassword').value.trim();
+
+      const users = getUsers();
+      const user = users.find(u =>
+        (u.name.toLowerCase() === identifier || u.whatsapp.toLowerCase() === identifier) &&
+        u.password === password
+      );
+
+      if (!user) {
+        showToast('❌ نام، واٹس ایپ نمبر یا پاس ورڈ غلط ہے۔');
+        return;
+      }
+
+      if (user.blocked) {
+        showToast('🚫 آپ کا اکاؤنٹ ایڈمن کی طرف سے بلاک کر دیا گیا ہے۔');
+        return;
+      }
+
+      await startUserSession(user);
+    }
+
+    async function demoLogin() {
+      let users = getUsers();
+      let demoUser = users.find(u => u.whatsapp === '+92 300 0000000');
+      if (!demoUser) {
+        demoUser = {
+          id: 'demo_family_user',
+          name: 'Family Demo',
+          whatsapp: '+92 300 0000000',
+          password: '1234',
+          vaultPin: '1234',
+          blocked: false,
+          createdAt: new Date().toLocaleDateString()
+        };
+        users.push(demoUser);
+        saveUsers(users);
+      }
+      if (demoUser.blocked) {
+        showToast('🚫 ڈیمو اکاؤنٹ بلاک ہے۔ نیا اکاؤنٹ رجسٹر کریں۔');
+        return;
+      }
+      await startUserSession(demoUser);
+      showToast('⚡ ڈیمو اکاؤنٹ میں لاگ ان ہو گئے (Locked PIN: 1234)');
+    }
+
+    async function startUserSession(user) {
+      currentUser = user;
+      localStorage.setItem(STORAGE_KEYS.CURRENT_USER, user.id);
+      isVaultUnlocked = false;
+      enteredPin = '';
+
+      await seedDemoDataIfNeeded(user.id);
+
+      document.getElementById('authScreen').classList.add('hidden');
+      document.getElementById('appScreen').classList.remove('hidden');
+      document.getElementById('welcomeUserTitle').textContent = 'خوش آمدید، ' + user.name;
+      document.getElementById('welcomeUserSub').textContent = 'WhatsApp: ' + user.whatsapp;
+
+      updateAnnouncementBanner();
+      switchNav('gallery');
+    }
+
+    function logoutUser() {
+      currentUser = null;
+      isVaultUnlocked = false;
+      localStorage.removeItem(STORAGE_KEYS.CURRENT_USER);
+      document.getElementById('appScreen').classList.add('hidden');
+      document.getElementById('authScreen').classList.remove('hidden');
+    }
+
+    function updateAnnouncementBanner() {
+      const msg = localStorage.getItem(STORAGE_KEYS.ANNOUNCEMENT) || '';
+      const bar = document.getElementById('announcementBar');
+      if (msg.trim()) {
+        document.getElementById('announcementText').textContent = msg;
+        bar.classList.remove('hidden');
+      } else {
+        bar.classList.add('hidden');
+      }
+    }
+
+    function switchNav(nav) {
+      currentNav = nav;
+      ['gallery', 'albums', 'favorites', 'vault', 'trash'].forEach(key => {
+        const cap = key.charAt(0).toUpperCase() + key.slice(1);
+        document.getElementById('view' + cap).classList.toggle('hidden', key !== nav);
+        document.getElementById('nav' + cap).classList.toggle('active', key === nav);
+      });
+
+      if (nav === 'vault') {
+        setupVaultGateUI();
+      }
+      renderCurrentView();
+    }
+
+    function setMediaFilter(filter) {
+      mediaFilter = filter;
+      document.getElementById('filterAll').classList.toggle('active', filter === 'all');
+      document.getElementById('filterPhoto').classList.toggle('active', filter === 'image');
+      document.getElementById('filterVideo').classList.toggle('active', filter === 'video');
+      renderGallery();
+    }
+
+    function setVaultFilter(filter) {
+      vaultFilter = filter;
+      document.getElementById('vaultFilterAll').classList.toggle('active', filter === 'all');
+      document.getElementById('vaultFilterVideo').classList.toggle('active', filter === 'video');
+      document.getElementById('vaultFilterPhoto').classList.toggle('active', filter === 'image');
+      renderVault();
+    }
+
+    function renderCurrentView() {
+      if (!currentUser) return;
+      if (currentNav === 'gallery') renderGallery();
+      else if (currentNav === 'albums') renderAlbums();
+      else if (currentNav === 'favorites') renderFavorites();
+      else if (currentNav === 'vault' && isVaultUnlocked) renderVault();
+      else if (currentNav === 'trash') renderTrash();
+    }
+
+    function getUserMedia() {
+      const q = document.getElementById('searchInput').value.trim().toLowerCase();
+      return allMedia.filter(m => {
+        if (m.userId !== currentUser.id) return false;
+        if (!q) return true;
+        return (m.title || '').toLowerCase().includes(q) || (m.album || '').toLowerCase().includes(q);
+      });
+    }
+
+    function renderGallery() {
+      const items = getUserMedia().filter(m => !m.locked && !m.trashed);
+
+      const memoriesRow = document.getElementById('memoriesRow');
+      const memoriesSec = document.getElementById('memoriesSection');
+      if (items.length > 0) {
+        memoriesSec.classList.remove('hidden');
+        memoriesRow.innerHTML = items.slice(0, 6).map(item => `
+          <div class="memory-card" onclick="openViewer('${item.id}')">
+            ${item.type === 'video'
+              ? `<video src="${item.dataUrl}" muted playsinline></video>`
+              : `<img src="${item.dataUrl}" alt="${escapeHtml(item.title)}" />`}
+            <div class="memory-overlay">
+              <span>${item.type === 'video' ? '🎬 ' : ''}${escapeHtml(item.title)}</span>
+            </div>
+          </div>
+        `).join('');
+      } else {
+        memoriesSec.classList.add('hidden');
+      }
+
+      const filtered = items.filter(m => mediaFilter === 'all' ? true : m.type === mediaFilter);
+      const grid = document.getElementById('galleryGrid');
+
+      if (filtered.length === 0) {
+        grid.innerHTML = `
+          <div class="empty-state" style="grid-column:1/-1;">
+            <div class="big-icon">🖼️</div>
+            <h4>کوئی تصویر یا ویڈیو موجود نہیں</h4>
+            <p style="font-size:13px; margin-top:4px;">اوپر <b>+ اپ لوڈ تصویر / ویڈیو</b> بٹن سے فیملی یادیں شامل کریں</p>
+          </div>`;
+        return;
+      }
+
+      grid.innerHTML = filtered.map(item => buildMediaCardHTML(item, 'gallery')).join('');
+    }
+
+    function buildMediaCardHTML(item, mode) {
+      const mediaTag = item.type === 'video'
+        ? `<video src="${item.dataUrl}" muted playsinline preload="metadata"></video><div class="video-badge">▶ ویڈیو</div>`
+        : `<img src="${item.dataUrl}" alt="${escapeHtml(item.title)}" loading="lazy" />`;
+
+      let actionButtons = '';
+      if (mode === 'vault') {
+        actionButtons = `
+          <div class="vault-card-actions">
+            <button class="vault-btn-save" onclick="event.stopPropagation(); downloadMediaById('${item.id}')">⬇️ محفوظ کریں</button>
+            <button class="vault-btn-unlock" onclick="event.stopPropagation(); toggleLockMedia('${item.id}')">🔓 ان لاک</button>
+          </div>`;
+      } else if (mode === 'trash') {
+        actionButtons = `
+          <div class="vault-card-actions">
+            <button class="vault-btn-unlock" onclick="event.stopPropagation(); restoreFromTrash('${item.id}')">♻️ بحال کریں</button>
+            <button class="vault-btn-save" style="background:var(--danger-light); color:var(--danger);" onclick="event.stopPropagation(); permanentDelete('${item.id}')">✕ ختم</button>
+          </div>`;
+      } else {
+        actionButtons = `
+          <button class="hide-btn-1tap" onclick="event.stopPropagation(); toggleLockMedia('${item.id}')">
+            🔒 چھپائیں (Hide)
+          </button>`;
+      }
+
+      return `
+        <div class="media-card">
+          <div class="media-thumb" onclick="openViewer('${item.id}')">
+            ${mediaTag}
+            ${mode !== 'trash' ? `<button class="fav-badge" onclick="event.stopPropagation(); toggleFavorite('${item.id}')">${item.favorite ? '❤️' : '🤍'}</button>` : ''}
+          </div>
+          <div class="card-footer">
+            <div class="card-meta">
+              <div class="card-title">${escapeHtml(item.title)}</div>
+              <div class="card-date">${item.date || ''}</div>
+            </div>
+            ${actionButtons}
+          </div>
+        </div>
+      `;
+    }
+
+    async function handleMediaUpload(event, directlyToVault) {
+      const files = Array.from(event.target.files || []);
+      if (!files.length || !currentUser) return;
+
+      showToast('⏳ فائل محفوظ کی جا رہی ہے...');
+
+      for (const file of files) {
+        const isVideo = file.type.startsWith('video/');
+        const dataUrl = await readFileAsDataURL(file);
+        const newItem = {
+          id: 'media_' + Date.now() + '_' + Math.random().toString(36).slice(2, 7),
+          userId: currentUser.id,
+          title: file.name.replace(/\.[^/.]+$/, '') || (isVideo ? 'Family Video' : 'Family Photo'),
+          type: isVideo ? 'video' : 'image',
+          dataUrl,
+          date: new Date().toLocaleDateString(),
+          favorite: false,
+          locked: Boolean(directlyToVault),
+          trashed: false,
+          album: 'General'
+        };
+        await dbPutMedia(newItem);
+      }
+
+      allMedia = await dbGetAllMedia();
+      event.target.value = '';
+      renderCurrentView();
+
+      if (directlyToVault) {
+        showToast(`🔒 ${files.length} فائل(ز) براہِ راست لاکڈ فولڈر میں محفوظ ہو گئیں!`);
+      } else {
+        showToast(`✅ ${files.length} فائل(ز) گیلری میں شامل ہو گئیں!`);
+      }
+    }
+
+    function readFileAsDataURL(file) {
+      return new Promise((resolve) => {
+        const reader = new FileReader();
+        reader.onload = () => resolve(reader.result);
+        reader.readAsDataURL(file);
+      });
+    }
+
+    async function toggleLockMedia(id) {
+      const item = allMedia.find(m => m.id === id);
+      if (!item) return;
+
+      const previousLockedState = item.locked;
+      item.locked = !previousLockedState;
+      await dbPutMedia(item);
+      allMedia = await dbGetAllMedia();
+      renderCurrentView();
+
+      const label = item.type === 'video' ? 'ویڈیو' : 'تصویر';
+      if (item.locked) {
+        showToast(`🔒 ${label} لاکڈ فولڈر میں چھپا دی گئی`, async () => {
+          item.locked = false;
+          await dbPutMedia(item);
+          allMedia = await dbGetAllMedia();
+          renderCurrentView();
+          showToast(`🔓 ${label} واپس گیلری میں آ گئی`);
+        });
+      } else {
+        showToast(`🔓 ${label} ان لاک ہو کر گیلری میں واپس آ گئی`);
+      }
+    }
+
+    function setupVaultGateUI() {
+      enteredPin = '';
+      updatePinDots();
+      document.getElementById('pinErrorMsg').textContent = '';
+
+      if (isVaultUnlocked) {
+        document.getElementById('vaultGate').classList.add('hidden');
+        document.getElementById('vaultUnlockedArea').classList.remove('hidden');
+        renderVault();
+        return;
+      }
+
+      document.getElementById('vaultGate').classList.remove('hidden');
+      document.getElementById('vaultUnlockedArea').classList.add('hidden');
+
+      const hasPin = Boolean(currentUser && currentUser.vaultPin);
+      document.getElementById('vaultGateTitle').textContent = hasPin
+        ? 'لاکڈ فولڈر کھولیں (Enter PIN)'
+        : 'لاکڈ فولڈر کا نیا PIN سیٹ کریں';
+      document.getElementById('vaultGateDesc').textContent = hasPin
+        ? 'اپنا 4 ہندسوں کا خفیہ PIN درج کریں'
+        : 'پہلی بار استعمال کے لیے کوئی بھی 4 ہندسوں کا PIN منتخب کریں';
+      document.getElementById('quickSetPinBtn').classList.toggle('hidden', hasPin);
+    }
+
+    function pressPinDigit(digit) {
+      if (enteredPin.length >= 4) return;
+      enteredPin += digit;
+      updatePinDots();
+
+      if (enteredPin.length === 4) {
+        setTimeout(handleCompletePin, 140);
+      }
+    }
+
+    function backspacePin() {
+      enteredPin = enteredPin.slice(0, -1);
+      updatePinDots();
+    }
+
+    function clearPinInput() {
+      enteredPin = '';
+      updatePinDots();
+      document.getElementById('pinErrorMsg').textContent = '';
+    }
+
+    function updatePinDots() {
+      const dots = document.querySelectorAll('#pinDots .pin-dot');
+      dots.forEach((dot, idx) => {
+        dot.classList.toggle('filled', idx < enteredPin.length);
+      });
+    }
+
+    function handleCompletePin() {
+      if (!currentUser.vaultPin) {
+        currentUser.vaultPin = enteredPin;
+        const users = getUsers().map(u => u.id === currentUser.id ? currentUser : u);
+        saveUsers(users);
+        isVaultUnlocked = true;
+        setupVaultGateUI();
+        showToast('✅ نیا PIN سیٹ ہو گیا اور لاکڈ فولڈر کھل گیا!');
+        return;
+      }
+
+      if (enteredPin === currentUser.vaultPin) {
+        isVaultUnlocked = true;
+        setupVaultGateUI();
+      } else {
+        document.getElementById('pinErrorMsg').textContent = '❌ غلط PIN! دوبارہ کوشش کریں';
+        enteredPin = '';
+        updatePinDots();
+      }
+    }
+
+    function quickSetDefaultPin() {
+      currentUser.vaultPin = '1234';
+      const users = getUsers().map(u => u.id === currentUser.id ? currentUser : u);
+      saveUsers(users);
+      isVaultUnlocked = true;
+      setupVaultGateUI();
+      showToast('⚡ آسان PIN (1234) سیٹ ہو گیا!');
+    }
+
+    function resetVaultPin() {
+      const pass = prompt('نیا PIN سیٹ کرنے کے لیے اپنا اکاؤنٹ پاس ورڈ لکھیں:');
+      if (pass === null) return;
+      if (pass.trim() === currentUser.password) {
+        currentUser.vaultPin = null;
+        const users = getUsers().map(u => u.id === currentUser.id ? currentUser : u);
+        saveUsers(users);
+        isVaultUnlocked = false;
+        setupVaultGateUI();
+        showToast('🔑 پرانا PIN ختم کر دیا گیا، اب نیا 4 ہندسوں کا PIN درج کریں');
+      } else {
+        showToast('❌ اکاؤنٹ پاس ورڈ غلط ہے');
+      }
+    }
+
+    function lockVaultNow() {
+      isVaultUnlocked = false;
+      setupVaultGateUI();
+      showToast('🔒 لاکڈ فولڈر محفوظ طریقے سے لاک کر دیا گیا');
+    }
+
+    function renderVault() {
+      const items = getUserMedia().filter(m => m.locked && !m.trashed);
+      const filtered = items.filter(m => vaultFilter === 'all' ? true : m.type === vaultFilter);
+      const grid = document.getElementById('vaultGrid');
+
+      if (filtered.length === 0) {
+        grid.innerHTML = `
+          <div class="empty-state" style="grid-column:1/-1;">
+            <div class="big-icon">🔐</div>
+            <h4>لاکڈ فولڈر میں ابھی کوئی فائل نہیں</h4>
+            <p style="font-size:13px; margin-top:4px;">اوپر بٹن سے براہِ راست ویڈیو/تصویر محفوظ کریں یا گیلری سے <b>🔒 چھپائیں</b> دبائیں</p>
+          </div>`;
+        return;
+      }
+
+      grid.innerHTML = filtered.map(item => buildMediaCardHTML(item, 'vault')).join('');
+    }
+
+    function renderAlbums() {
+      const items = getUserMedia().filter(m => !m.locked && !m.trashed);
+      const customAlbums = JSON.parse(localStorage.getItem(STORAGE_KEYS.ALBUMS) || '{}')[currentUser.id] || ['Family Gathering', 'Celebrations'];
+      const albumNames = Array.from(new Set([...customAlbums, ...items.map(i => i.album || 'General')]));
+
+      const list = document.getElementById('albumsList');
+      list.innerHTML = albumNames.map(name => {
+        const albumItems = items.filter(i => (i.album || 'General') === name);
+        const cover = albumItems[0];
+        return `
+          <div class="media-card" onclick="filterByAlbum('${escapeHtml(name)}')">
+            <div class="media-thumb" style="background:#e8f0fe; display:flex; align-items:center; justify-content:center;">
+              ${cover
+                ? (cover.type === 'video' ? `<video src="${cover.dataUrl}" muted></video>` : `<img src="${cover.dataUrl}" />`)
+                : `<span style="font-size:44px;">📁</span>`}
+            </div>
+            <div class="card-footer">
+              <div class="card-title">${escapeHtml(name)}</div>
+              <div class="card-date">${albumItems.length} آئٹمز</div>
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    function createNewAlbum() {
+      const name = prompt('نئے البم کا نام لکھیں (مثلاً: Kids, Wedding, Eid):');
+      if (!name || !name.trim()) return;
+      const allAlbums = JSON.parse(localStorage.getItem(STORAGE_KEYS.ALBUMS) || '{}');
+      const userAlbums = allAlbums[currentUser.id] || ['Family Gathering', 'Celebrations'];
+      if (!userAlbums.includes(name.trim())) {
+        userAlbums.push(name.trim());
+        allAlbums[currentUser.id] = userAlbums;
+        localStorage.setItem(STORAGE_KEYS.ALBUMS, JSON.stringify(allAlbums));
+      }
+      renderAlbums();
+      showToast('📁 نیا البم "' + name.trim() + '" بن گیا');
+    }
+
+    function filterByAlbum(albumName) {
+      document.getElementById('searchInput').value = albumName;
+      switchNav('gallery');
+    }
+
+    async function toggleFavorite(id) {
+      const item = allMedia.find(m => m.id === id);
+      if (!item) return;
+      item.favorite = !item.favorite;
+      await dbPutMedia(item);
+      allMedia = await dbGetAllMedia();
+      renderCurrentView();
+    }
+
+    function renderFavorites() {
+      const favs = getUserMedia().filter(m => m.favorite && !m.locked && !m.trashed);
+      const grid = document.getElementById('favoritesGrid');
+      if (favs.length === 0) {
+        grid.innerHTML = `<div class="empty-state" style="grid-column:1/-1;"><div class="big-icon">❤️</div><h4>ابھی کوئی پسندیدہ تصویر یا ویڈیو نہیں</h4></div>`;
+        return;
+      }
+      grid.innerHTML = favs.map(item => buildMediaCardHTML(item, 'gallery')).join('');
+    }
+
+    function renderTrash() {
+      const trashed = getUserMedia().filter(m => m.trashed);
+      const grid = document.getElementById('trashGrid');
+      if (trashed.length === 0) {
+        grid.innerHTML = `<div class="empty-state" style="grid-column:1/-1;"><div class="big-icon">🗑️</div><h4>ٹریش خالی ہے</h4></div>`;
+        return;
+      }
+      grid.innerHTML = trashed.map(item => buildMediaCardHTML(item, 'trash')).join('');
+    }
+
+    async function restoreFromTrash(id) {
+      const item = allMedia.find(m => m.id === id);
+      if (!item) return;
+      item.trashed = false;
+      await dbPutMedia(item);
+      allMedia = await dbGetAllMedia();
+      renderTrash();
+      showToast('♻️ فائل واپس بحال ہو گئی');
+    }
+
+    async function permanentDelete(id) {
+      await dbDeleteMedia(id);
+      allMedia = await dbGetAllMedia();
+      renderTrash();
+      showToast('🗑️ فائل ہمیشہ کے لیے حذف کر دی گئی');
+    }
+
+    async function emptyTrash() {
+      const trashed = getUserMedia().filter(m => m.trashed);
+      for (const item of trashed) {
+        await dbDeleteMedia(item.id);
+      }
+      allMedia = await dbGetAllMedia();
+      renderTrash();
+      showToast('🗑️ ٹریش مکمل صاف کر دیا گیا');
+    }
+
+    function openViewer(id) {
+      const item = allMedia.find(m => m.id === id);
+      if (!item) return;
+      activeViewerItem = item;
+      viewerRotation = 0;
+
+      document.getElementById('viewerTitle').textContent = item.title;
+      const stage = document.getElementById('viewerStage');
+      const editTools = document.getElementById('photoEditTools');
+
+      if (item.type === 'video') {
+        stage.innerHTML = `<video src="${item.dataUrl}" controls autoplay playsinline style="width:100%;"></video>`;
+        editTools.classList.add('hidden');
+      } else {
+        stage.innerHTML = `<img id="viewerImgEl" src="${item.dataUrl}" alt="${escapeHtml(item.title)}" />`;
+        editTools.classList.remove('hidden');
+        editTools.style.display = 'flex';
+      }
+
+      document.getElementById('viewerFavBtn').textContent = item.favorite ? '💔 پسندیدہ سے ہٹائیں' : '❤️ پسندیدہ';
+      document.getElementById('viewerLockBtn').textContent = item.locked ? '🔓 ان لاک کریں' : '🔒 چھپائیں (Hide)';
+      document.getElementById('viewerModal').classList.remove('hidden');
+    }
+
+    function closeViewer() {
+      document.getElementById('viewerStage').innerHTML = '';
+      document.getElementById('viewerModal').classList.add('hidden');
+      activeViewerItem = null;
+    }
+
+    function closeViewerOnBackdrop(e) {
+      if (e.target.id === 'viewerModal') closeViewer();
+    }
+
+    function applyViewerFilter(filterCss) {
+      const img = document.getElementById('viewerImgEl');
+      if (img) img.style.filter = filterCss;
+    }
+
+    function rotateViewerImage() {
+      const img = document.getElementById('viewerImgEl');
+      if (!img) return;
+      viewerRotation = (viewerRotation + 90) % 360;
+      img.style.transform = `rotate(${viewerRotation}deg)`;
+    }
+
+    async function toggleViewerFavorite() {
+      if (!activeViewerItem) return;
+      await toggleFavorite(activeViewerItem.id);
+      activeViewerItem = allMedia.find(m => m.id === activeViewerItem.id);
+      document.getElementById('viewerFavBtn').textContent = activeViewerItem.favorite ? '💔 پسندیدہ سے ہٹائیں' : '❤️ پسندیدہ';
+    }
+
+    async function toggleViewerLock() {
+      if (!activeViewerItem) return;
+      const id = activeViewerItem.id;
+      closeViewer();
+      await toggleLockMedia(id);
+    }
+
+    async function deleteViewerMedia() {
+      if (!activeViewerItem) return;
+      const item = activeViewerItem;
+      closeViewer();
+      if (item.trashed) {
+        await permanentDelete(item.id);
+      } else {
+        item.trashed = true;
+        item.locked = false;
+        await dbPutMedia(item);
+        allMedia = await dbGetAllMedia();
+        renderCurrentView();
+        showToast('🗑️ ٹریش میں منتقل کر دیا گیا');
+      }
+    }
+
+    function downloadMediaById(id) {
+      const item = allMedia.find(m => m.id === id);
+      if (!item) return;
+      const a = document.createElement('a');
+      a.href = item.dataUrl;
+      const ext = item.type === 'video' ? 'mp4' : (item.dataUrl.startsWith('data:image/svg') ? 'svg' : 'png');
+      a.download = (item.title || 'family-media') + '.' + ext;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      showToast('⬇️ فائل فون میں محفوظ (Download) ہو رہی ہے');
+    }
+
+    function downloadViewerMedia() {
+      if (activeViewerItem) downloadMediaById(activeViewerItem.id);
+    }
+
+    function openAdminModal() {
+      document.getElementById('adminLoginBox').classList.remove('hidden');
+      document.getElementById('adminDashboard').classList.add('hidden');
+      document.getElementById('adminPassInput').value = '';
+      document.getElementById('adminModal').classList.remove('hidden');
+    }
+
+    function closeAdminModal() {
+      document.getElementById('adminModal').classList.add('hidden');
+    }
+
+    function verifyAdminLogin() {
+      const id = document.getElementById('adminIdInput').value.trim();
+      const pass = document.getElementById('adminPassInput').value.trim();
+      const expectedPass = localStorage.getItem(STORAGE_KEYS.ADMIN_PASS) || '1234';
+
+      if (id === 'admin' && pass === expectedPass) {
+        document.getElementById('adminLoginBox').classList.add('hidden');
+        document.getElementById('adminDashboard').classList.remove('hidden');
+        renderAdminDashboard();
+      } else {
+        showToast('❌ غلط Admin ID یا Password (Default: admin / 1234)');
+      }
+    }
+
+    function renderAdminDashboard() {
+      const users = getUsers();
+      const photosCount = allMedia.filter(m => m.type === 'image' && !m.trashed).length;
+      const videosCount = allMedia.filter(m => m.type === 'video' && !m.trashed).length;
+      const lockedCount = allMedia.filter(m => m.locked && !m.trashed).length;
+
+      document.getElementById('statUsers').textContent = users.length;
+      document.getElementById('statPhotos').textContent = photosCount;
+      document.getElementById('statVideos').textContent = videosCount;
+      document.getElementById('statLocked').textContent = lockedCount;
+
+      document.getElementById('adminAnnouncementInput').value = localStorage.getItem(STORAGE_KEYS.ANNOUNCEMENT) || '';
+
+      const list = document.getElementById('adminUsersList');
+      if (users.length === 0) {
+        list.innerHTML = `<div style="color:var(--text-muted); font-size:13px;">ابھی تک کوئی صارف رجسٹر نہیں ہوا۔</div>`;
+        return;
+      }
+
+      list.innerHTML = users.map(u => {
+        const userMediaCount = allMedia.filter(m => m.userId === u.id && !m.trashed).length;
+        return `
+          <div class="user-row-card">
+            <div>
+              <div style="font-weight:700; font-size:14px;">
+                ${escapeHtml(u.name)}
+                <span class="badge ${u.blocked ? 'badge-blocked' : 'badge-active'}">${u.blocked ? 'Blocked' : 'Active'}</span>
+              </div>
+              <div style="font-size:12px; color:var(--text-muted); margin-top:3px;">
+                📱 WhatsApp: <b>${escapeHtml(u.whatsapp)}</b> | 🔑 Pass: <b>${escapeHtml(u.password)}</b> | 🖼️ Media: <b>${userMediaCount}</b>
+              </div>
+            </div>
+            <div style="display:flex; gap:6px;">
+              <button class="btn-ghost" style="font-size:12px; padding:7px 10px;" onclick="adminToggleBlock('${u.id}')">
+                ${u.blocked ? '✅ ان بلاک' : '🚫 بلاک'}
+              </button>
+              <button class="btn-danger" style="font-size:12px; padding:7px 10px;" onclick="adminDeleteUser('${u.id}')">حذف</button>
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    function saveAnnouncement() {
+      const val = document.getElementById('adminAnnouncementInput').value.trim();
+      localStorage.setItem(STORAGE_KEYS.ANNOUNCEMENT, val);
+      updateAnnouncementBanner();
+      showToast('📢 ویب سائٹ اعلان اپ ڈیٹ ہو گیا!');
+    }
+
+    function adminToggleBlock(userId) {
+      const users = getUsers().map(u => {
+        if (u.id === userId) u.blocked = !u.blocked;
+        return u;
+      });
+      saveUsers(users);
+      renderAdminDashboard();
+      showToast('صارف کی حیثیت تبدیل کر دی گئی');
+    }
+
+    async function adminDeleteUser(userId) {
+      if (!confirm('کیا آپ واقعی اس صارف اور اس کا تمام ڈیٹا حذف کرنا چاہتے ہیں؟')) return;
+      const users = getUsers().filter(u => u.id !== userId);
+      saveUsers(users);
+      const userItems = allMedia.filter(m => m.userId === userId);
+      for (const item of userItems) {
+        await dbDeleteMedia(item.id);
+      }
+      allMedia = await dbGetAllMedia();
+      renderAdminDashboard();
+      showToast('صارف حذف کر دیا گیا');
+    }
+
+    function showToast(msg, onUndo = null) {
+      const box = document.getElementById('toastBox');
+      const undoBtn = document.getElementById('toastUndoBtn');
+      document.getElementById('toastMessage').textContent = msg;
+
+      undoCallback = onUndo;
+      undoBtn.classList.toggle('hidden', !onUndo);
+      box.classList.remove('hidden');
+
+      clearTimeout(toastTimer);
+      toastTimer = setTimeout(() => {
+        box.classList.add('hidden');
+        undoCallback = null;
+      }, 4200);
+    }
+
+    function triggerUndo() {
+      if (undoCallback) {
+        const fn = undoCallback;
+        undoCallback = null;
+        document.getElementById('toastBox').classList.add('hidden');
+        fn();
+      }
+    }
+
+    function escapeHtml(str) {
+      return String(str || '')
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;');
+    }
+
+    window.addEventListener('DOMContentLoaded', async () => {
+      await initDB();
+      allMedia = await dbGetAllMedia();
+
+      const savedUserId = localStorage.getItem(STORAGE_KEYS.CURRENT_USER);
+      if (savedUserId) {
+        const user = getUsers().find(u => u.id === savedUserId && !u.blocked);
+        if (user) {
+          await startUserSession(user);
+          return;
+        }
+      }
+    });
+  </script>
+</body>
+</html>
